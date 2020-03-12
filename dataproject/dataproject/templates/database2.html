@@ -1,0 +1,57 @@
+﻿{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<h2>Ebola</h2>
+<h3>This is the Data base about the Ebola.</h3>
+<p> The data base is shows us the Ebola cases in the world. </p>
+
+<div class="row my-grid-borders">
+    <h2>Data set fields</h2>
+</div>
+<div class="row my-grid-borders">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>indicator</td>
+                <td> Cumulative number of confirmed, probable and suspected Ebola cases</td>
+            </tr>
+            <tr>
+                <td> country</td>
+                <td>Twhat country it is happend</td>
+            </tr>
+            <tr>
+                <td>value</td>
+                <td>The number of the cases</td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+<div class="row my-grid-borders">
+    <div class="col-md-5 my-grid-borders">
+        <form method="post">
+            {{ form1.csrf_token }}
+            <input class="btn btn-success" type="submit" name="action" value="Expand">
+        </form>
+    </div>
+    <div class="col-md-5 my-grid-borders">
+        <form method="post">
+            {{ form2.csrf_token }}
+            <input class="btn btn-danger" type="submit" name="action" value="Collapse">
+        </form>
+    </div>
+</div>
+<div class="row my-grid-borders">
+    {{ raw_data_table | safe}}
+</div>
+
+
+{% endblock %}

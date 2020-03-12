@@ -1,0 +1,64 @@
+﻿{% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<h2>Corona</h2>
+<h3>This is the Data base about the Corona</h3>
+<p> The data base shows us a lot of information about Corona cases when it happend, if he recover , the age, the country and more...</p>
+
+<div class="row my-grid-borders">
+    <h2>Data set fields</h2>
+</div>
+<div class="row my-grid-borders">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Field</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>country</td>
+                <td>where it happend</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>case in country</td>
+            </tr>
+            <tr>
+                <td>source</td>
+                <td>from where is the information</td>
+            </tr>
+            <tr>
+                <td>hosp visit date</td>
+                <td>Ohospital visit date</td>
+            </tr>
+            <tr>
+                <td>exposure start</td>
+                <td>when they found that the person have Corona</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row my-grid-borders">
+    <div class="col-md-5 my-grid-borders">
+        <form method="post">
+            {{ form1.csrf_token }}
+            <input class="btn btn-success" type="submit" name="action" value="Expand">
+        </form>
+    </div>
+    <div class="col-md-5 my-grid-borders">
+        <form method="post">
+            {{ form2.csrf_token }}
+            <input class="btn btn-danger" type="submit" name="action" value="Collapse">
+        </form>
+    </div>
+</div>
+<div class="row my-grid-borders">
+    {{ raw_data_table | safe}}
+</div>
+
+
+{% endblock %}
