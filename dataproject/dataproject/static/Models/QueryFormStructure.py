@@ -22,3 +22,8 @@ class UserRegistrationFormStructure(FlaskForm):
     username   = StringField('User name:  ' , validators = [DataRequired()])
     password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
+
+class DataQueryFormStructure(FlaskForm):
+    diseasename   = StringField('disease name:  ' , validators = [DataRequired("please enter a disease name")])
+    startyear  = intField('start year  ' , validators = [DataRequired("please enter the start year")])
+    submit = SubmitField('Submit')
