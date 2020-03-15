@@ -62,6 +62,7 @@
     <Content Include="dataproject\templates\database1.html" />
     <Content Include="dataproject\templates\database2.html" />
     <Content Include="dataproject\templates\datamodel.html" />
+    <Content Include="dataproject\templates\DataQuery.html" />
     <Content Include="dataproject\templates\login.html" />
     <Content Include="dataproject\templates\PhotoAlbum.html" />
     <Content Include="dataproject\templates\register.html" />
