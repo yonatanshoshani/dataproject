@@ -184,28 +184,4 @@ def database2():
         form1 = form1,
         form2 = form2
     )
-@app.route('/data/database1' , methods = ['GET' , 'POST'])
-def data1():
-    """Renders the about page."""
-    form1 = ExpandForm()
-    form2 = CollapseForm()
-    df = pd.read_csv(path.join(path.dirname(__file__), 'healthcare.csv'))
-    raw_data_table = ''
 
-    if request.method == 'POST':
-        if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.to_html(classes = 'table table-hover')
-        if request.form['action'] == 'Collapse' and form2.validate_on_submit():
-            raw_data_table = ''
-
-    
-
-    return render_template(
-        'database1.html',
-        title='Data 2',
-        year=datetime.now().year,
-        message='My Data 1 page.',
-        raw_data_table = raw_data_table,
-        form1 = form1,
-        form2 = form2
-    )
