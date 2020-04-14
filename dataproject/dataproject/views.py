@@ -184,30 +184,16 @@ def database2():
         form1 = form1,
         form2 = form2
     )
-@app.route('/DataQuery' , methods = ['GET' , 'POST'])
+@app.route('/DataQuery')
 def DataQuery():
     """Renders the about page."""
-    form1 = ExpandForm()
-    form2 = CollapseForm()
-    df = pd.read_csv(path.join(path.dirname(__file__), 'static\data\ebola.csv'))
-    raw_data_table = ''
-
-    if request.method == 'POST':
-        if request.form['action'] == 'Expand' and form1.validate_on_submit():
-            raw_data_table = df.to_html(classes = 'table table-hover')
-        if request.form['action'] == 'Collapse' and form2.validate_on_submit():
-            raw_data_table = ''
-
-    
-
     return render_template(
-        'database2.html',
-        title='Data 2',
+        'DataQuery.html',
+        title='DataQuery',
         year=datetime.now().year,
-        message='My Data 2 page.',
-        raw_data_table = raw_data_table,
-        form1 = form1,
-        form2 = form2
+       
     )
+
+  
 
 
