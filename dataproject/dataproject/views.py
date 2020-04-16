@@ -38,6 +38,8 @@ bootstrap = Bootstrap(app)
 from dataproject.static.Models.Forms import ExpandForm
 from dataproject.static.Models.Forms import CollapseForm
  
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
  
  
 db_Functions = create_LocalDatabaseServiceRoutines()
@@ -185,56 +187,57 @@ def database2():
         form1 = form1,
         form2 = form2
     )
-@app.route('/DataQuery')
+@app.route('/DataQuery',methods = ['GET' , 'POST'])
 def DataQuery():
     form = QueryFormStructure()
     chart = ""
  
     df = pd.read_csv(path.join(path.dirname(__file__), "static/data/ebola.csv"))
     s = set(df['Country'])
-    df['Date'] = df['Date'].astype(str)
-    def swich_day_month(s):
-        l = s.split('/')
-        return(l[1] + '/' + l[0] + '/' + l[2])
-    df['Date'] = df['Date'].apply(lambda x: swich_day_month(x))
-    df['Date']= pd.to_datetime(df['Date'])
-    df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
-    country_list = ['Guinea' , 'Sierra Leone' , 'Liberia' , 'Senegal' , 'Italy' , 'Liberia 2' , 'Mali' , 'United Kingdom' , 'United States of America' , 'Spain' , 'Guina 2']
-    df3 = df.loc[df['Country'] == 'Sierra Leone']
-    df3 = df3.set_index('Date')
-    df3 = df3.drop(['Indicator' , 'Country' , 'value'] , 1)
-    for country in country_list:
-        df1 = df.loc[df['Country'] == country]
-        df1 = df1.set_index('Date')
-        df1 = df1.sort_index()
-        df1=df1.drop(['Indicator' , 'Country'] , 1)
-        df3[country] = df1['value']
-    df3 = df3.fillna(value=0)
-    df1 = df.loc[df['Country'] == 'Sierra Leone']
-    df1 = df1.set_index('Date')
-    df1 = df1.sort_index()
-    df1=df1.drop(['Indicator' , 'Country'] , 1)
-    df2 = df.loc[df['Country'] == 'Guinea']
-    df2 = df2.set_index('Date')
-    df2 = df2.sort_index()
-    df2=df2.drop(['Indicator' , 'Country'] , 1)
-    df3 = df1
-    df3['Guinea'] = df2['value']
+    l=list(s)
+    countrychoices= list(zip(l,l))
+    form.countries.choices=countrychoices
+    if request.method == 'POST':
+        country_list= form.countries.data
+        df['Date'] = df['Date'].astype(str)
+        
+        df['Date'] = df['Date'].apply(lambda x: swich_day_month(x))
+        df['Date']= pd.to_datetime(df['Date'])
+        df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
+        df3 = df.loc[df['Country'] == 'Sierra Leone']
+        df3 = df3.set_index('Date')
+        df3 = df3.drop(['Indicator' , 'Country' , 'value'] , 1)
+        for country in country_list:
+            df1 = df.loc[df['Country'] == country]
+            df1 = df1.set_index('Date')
+            df1 = df1.sort_index()
+            df1=df1.drop(['Indicator' , 'Country'] , 1)
+            df3[country] = df1['value']
+        df3 = df3.fillna(value=0)
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        df3.plot(ax=ax)
+        chart = plot_to_img(fig)
  
  
     return render_template(
         'DataQuery.html',
         title='DataQuery',
         form=form,
-        year=datetime.now().year,
+        chart=chart,
+        year=datetime.now().year
        
  
     )
  
-def plotToImage(fig):
+def plot_to_img(fig):
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
     pngImageB64String = "data:image/png;base64,"
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
+
+def swich_day_month(s):
+            l = s.split('/')
+            return(l[1] + '/' + l[0] + '/' + l[2])
 

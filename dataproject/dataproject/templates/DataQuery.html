@@ -4,29 +4,25 @@
 {% block content %}
 
 <h2>Data Query Page</h2>
-
 <div class="row">
-    <div class="col">
-        <b>Form</b>
-        <form method=post>
+
+    <div class="col-md-4">
+        <form method="post">
             {{ form.csrf_token }}
-            <div class="form-group">
-                {{ form.country.label }}
-                {{ form.country(class_="form-control text-capitalize")}}
-            </div>
-            <div class="form-group">
-                {{ form.value.label }}
-                {{ form.value(class_="form-control text-capitalize")}}
-            </div>
-            <div class="form-group">
-                <input class="btn btn-info" type="submit" value="Query">
-            </div>
+            {{ wtf.form_field(form.countries)}}
+            {{ wtf.form_field(form.startdate)}}
+            {{ wtf.form_field(form.enddate)}}
+            <input class="btn btn-primary" type="submit" value="submit">
         </form>
     </div>
-    <div class="col">
-        <b>Result</b>
-        <img src="{{ chart }}" alt="" />
+    <div class="col-md-8">
+        <div class="row">
+            <h4>Ebola by countries</h4>
+            <img src={{ chart }} class="img-thumbnail" alt="not found">
+        </div>
     </div>
 </div>
+
+
 
 {% endblock %}

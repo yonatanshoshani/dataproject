@@ -3,8 +3,9 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms import Form, BooleanField, PasswordField
-from wtforms import TextField, TextAreaField, SelectField, DateField
+from wtforms import TextField, TextAreaField, SelectField, SelectMultipleField,RadioField
 from wtforms import validators, ValidationError
+from wtforms.fields.html5 import DateField
  
 from wtforms.validators import DataRequired
  
@@ -24,7 +25,8 @@ class UserRegistrationFormStructure(FlaskForm):
     submit = SubmitField('Submit')
  
 class QueryFormStructure(FlaskForm):
-    country = SelectField('Country', validators = [DataRequired])
-    value = StringField('Value', validators = [DataRequired])
+    countries = SelectMultipleField('Select Countries:', validators = [DataRequired])
+    startdate= DateField('Start Date:',format='%Y-%m-%d' , validators = [DataRequired])
+    enddate= DateField('End Date:',format='%Y-%m-%d' , validators = [DataRequired])
     submit = SubmitField('Submit')
 
