@@ -25,6 +25,7 @@ class UserRegistrationFormStructure(FlaskForm):
     submit = SubmitField('Submit')
  
 class QueryFormStructure(FlaskForm):
+    indicator = SelectField('Select indicator:', validators = [DataRequired])
     countries = SelectMultipleField('Select Countries:', validators = [DataRequired])
     startdate= DateField('Start Date:',format='%Y-%m-%d' , validators = [DataRequired])
     enddate= DateField('End Date:',format='%Y-%m-%d' , validators = [DataRequired])

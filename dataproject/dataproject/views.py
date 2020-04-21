@@ -187,6 +187,9 @@ def database2():
         form1 = form1,
         form2 = form2
     )
+
+
+
 @app.route('/DataQuery',methods = ['GET' , 'POST'])
 def DataQuery():
     form = QueryFormStructure()
@@ -197,6 +200,12 @@ def DataQuery():
     l=list(s)
     countrychoices= list(zip(l,l))
     form.countries.choices=countrychoices
+    f = set(df['Indicator'])
+    e=list(f)
+    indicatorchoices= list(zip(e,e))
+        #('Cumulative number of confirmed, probable and suspected Ebola cases',' Cumulative number of confirmed, probable and suspected Ebola deaths'))
+   #list(zip(e,e))
+    form.indicator.choices = indicatorchoices
     if request.method == 'POST':
         country_list= form.countries.data
         df['Date'] = df['Date'].astype(str)
@@ -226,10 +235,10 @@ def DataQuery():
         form=form,
         chart=chart,
         year=datetime.now().year
-       
+      
  
     )
- 
+
 def plot_to_img(fig):
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)

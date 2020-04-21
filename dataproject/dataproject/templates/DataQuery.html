@@ -15,6 +15,7 @@
     <div class="col-md-4">
         <form method="post">
             {{ form.csrf_token }}
+            {{ wtf.form_field(form.indicator)}}
             {{ wtf.form_field(form.countries)}}
             {{ wtf.form_field(form.startdate)}}
             {{ wtf.form_field(form.enddate)}}
