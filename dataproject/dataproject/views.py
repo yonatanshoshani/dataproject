@@ -1,8 +1,8 @@
 from datetime import datetime
 from flask import render_template
 from dataproject import app
-from dataproject.static.Models.LocalDatabaseRoutines import create_LocalDatabaseServiceRoutines
-from dataproject.static.Models.QueryFormStructure import QueryFormStructure
+from dataproject.Models.LocalDatabaseRoutines import create_LocalDatabaseServiceRoutines
+from dataproject.Models.QueryFormStructure import QueryFormStructure
  
  
 from datetime import datetime
@@ -29,14 +29,14 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateField
 from wtforms import ValidationError
  
-from dataproject.static.Models.QueryFormStructure import LoginFormStructure
-from dataproject.static.Models.QueryFormStructure import UserRegistrationFormStructure
+from dataproject.Models.QueryFormStructure import LoginFormStructure
+from dataproject.Models.QueryFormStructure import UserRegistrationFormStructure
  
 from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap(app)
  
-from dataproject.static.Models.Forms import ExpandForm
-from dataproject.static.Models.Forms import CollapseForm
+from dataproject.Models.Forms import ExpandForm
+from dataproject.Models.Forms import CollapseForm
  
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -94,6 +94,7 @@ def datamodel():
         year=datetime.now().year,
         message='Your application data page.'
     )
+
 @app.route('/register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
@@ -200,12 +201,12 @@ def DataQuery():
     l=list(s)
     countrychoices= list(zip(l,l))
     form.countries.choices=countrychoices
-    f = set(df['Indicator'])
-    e=list(f)
-    indicatorchoices= list(zip(e,e))
+   # f = set(df['Indicator'])
+   # e=list(f)
+    #indicatorchoices= list(zip(e,e))
         #('Cumulative number of confirmed, probable and suspected Ebola cases',' Cumulative number of confirmed, probable and suspected Ebola deaths'))
    #list(zip(e,e))
-    form.indicator.choices = indicatorchoices
+   # form.indicator.choices = indicatorchoices
     if request.method == 'POST':
         country_list= form.countries.data
         df['Date'] = df['Date'].astype(str)

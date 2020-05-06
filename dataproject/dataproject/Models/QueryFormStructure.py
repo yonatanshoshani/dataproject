@@ -19,13 +19,13 @@ class UserRegistrationFormStructure(FlaskForm):
     FirstName  = StringField('First name:  ' , validators = [DataRequired()])
     LastName   = StringField('Last name:  ' , validators = [DataRequired()])
     PhoneNum   = StringField('Phone number:  ' , validators = [DataRequired()])
-    EmailAddr  = StringField('E-Mail:  ' , validators = [DataRequired()])
+    EmailAddr  = StringField('E-Mail:  ' , validators = [])
     username   = StringField('User name:  ' , validators = [DataRequired()])
     password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
  
 class QueryFormStructure(FlaskForm):
-    indicator = SelectField('Select indicator:', validators = [DataRequired])
+   # indicator = SelectField('Select indicator:', validators = [DataRequired])
     countries = SelectMultipleField('Select Countries:', validators = [DataRequired])
     startdate= DateField('Start Date:',format='%Y-%m-%d' , validators = [DataRequired])
     enddate= DateField('End Date:',format='%Y-%m-%d' , validators = [DataRequired])

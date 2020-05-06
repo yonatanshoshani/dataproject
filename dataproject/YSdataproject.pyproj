@@ -29,9 +29,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="dataproject\static\Models\Fos.py" />
-    <Compile Include="dataproject\static\Models\LocalDatabaseRoutines.py" />
-    <Compile Include="dataproject\static\Models\QueryFormStructure.py" />
+    <Compile Include="dataproject\Models\Fos.py" />
+    <Compile Include="dataproject\Models\LocalDatabaseRoutines.py" />
+    <Compile Include="dataproject\Models\QueryFormStructure.py" />
     <Compile Include="runserver.py" />
     <Compile Include="dataproject\__init__.py" />
     <Compile Include="dataproject\views.py" />
@@ -42,7 +42,7 @@
     <Folder Include="dataproject\static\content\" />
     <Folder Include="dataproject\static\fonts\" />
     <Folder Include="dataproject\static\data\" />
-    <Folder Include="dataproject\static\Models\" />
+    <Folder Include="dataproject\Models\" />
     <Folder Include="dataproject\static\pictures\" />
     <Folder Include="dataproject\static\scripts\" />
     <Folder Include="dataproject\templates\" />
@@ -62,6 +62,7 @@
     <Content Include="dataproject\templates\database1.html" />
     <Content Include="dataproject\templates\database2.html" />
     <Content Include="dataproject\templates\datamodel.html" />
+    <Content Include="dataproject\templates\DataQuery - Copy.html" />
     <Content Include="dataproject\templates\DataQuery.html" />
     <Content Include="dataproject\templates\login.html" />
     <Content Include="dataproject\templates\PhotoAlbum.html" />
