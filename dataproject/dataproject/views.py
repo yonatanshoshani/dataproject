@@ -40,13 +40,14 @@ from dataproject.Models.Forms import CollapseForm
  
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
- 
+
+ ##All of the above are Imports. 
  
 db_Functions = create_LocalDatabaseServiceRoutines()
  
 app.config['SECRET_KEY'] = 'All You Need Is Love Ta ta ta ta ta'
  
- 
+ ## the home route
 @app.route('/')
 @app.route('/home')
 def home():
@@ -125,6 +126,7 @@ def Login():
     if (request.method == 'POST' and form.validate()):
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
             flash('Login approved!')
+            return redirect ('DataQuery')
         else:
             flash('Error in - Username and/or password')
    
@@ -197,6 +199,7 @@ def DataQuery():
     chart = ""
  
     df = pd.read_csv(path.join(path.dirname(__file__), "static/data/ebola.csv"))
+    ## reads the file
     s = set(df['Country'])
     l=list(s)
     countrychoices= list(zip(l,l))
