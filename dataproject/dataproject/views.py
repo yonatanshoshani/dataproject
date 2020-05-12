@@ -30,18 +30,17 @@ from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateFiel
 from wtforms import ValidationError
 
 from dataproject.Models.QueryFormStructure import QueryFormStructure
-## The import form used to select parameters to display the graph on the data query page.
+## The impor 'QueryFormStructure' form used to select parameters to display the graph on the data query page.
 from dataproject.Models.QueryFormStructure import LoginFormStructure
 from dataproject.Models.QueryFormStructure import UserRegistrationFormStructure
- ##from dataproject.Models.QueryFormStructure import LoginFormStructure, UserRegistrationFormStructure
  ##Import the forms that the user fills in order to register or login to the website
+from dataproject.Models.Fos import ExpandForm
+from dataproject.Models.Fos import CollapseForm
+ ##Import the completed forms to expand or Coolapse the databases.
 from flask_bootstrap import Bootstrap
 bootstrap = Bootstrap(app)
  
-from dataproject.Models.Fos import ExpandForm
-from dataproject.Models.Fos import CollapseForm
- ###from dataproject.Models.Fos import  IExpandForm, CollapseForm.
- ##Import the completed forms to expand or Coolapse the databases.
+
 
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -52,17 +51,18 @@ db_Functions = create_LocalDatabaseServiceRoutines()
  
 app.config['SECRET_KEY'] = 'All You Need Is Love Ta ta ta ta ta'
  
- ## the home route
+## The route to the home page
 @app.route('/')
 @app.route('/home')
 def home():
-    """Renders the home page."""
+    """Renders the 'home' page."""
     return render_template(
         'index.html',
         title='Home Page',
         year=datetime.now().year,
     )
- 
+
+ ## The route to the 'contact' page
 @app.route('/contact')
 def contact():
     """Renders the contact page."""
@@ -73,6 +73,7 @@ def contact():
         message='Here you have my contact information-'
     )
 
+ ## The route to the 'PhotoAlbum' page
 @app.route('/PhotoAlbum')
 def PhotoAlbum():
     """Renders the PhotoAlbum page."""
@@ -82,6 +83,7 @@ def PhotoAlbum():
         year=datetime.now().year,
     )
  
+## The route to the 'about' page
 @app.route('/about')
 def about():
     """Renders the about page."""
@@ -92,6 +94,7 @@ def about():
        
     )
  
+## The route to the 'datamodel' page
 @app.route('/datamodel')
 def datamodel():
     """Renders the about page."""
@@ -102,6 +105,7 @@ def datamodel():
         message='Your application data page.'
     )
 
+## The route to the h'register' page
 @app.route('/register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
@@ -124,14 +128,15 @@ def Register():
         year=datetime.now().year,
         repository_name='Pandas',
         )
- 
+
+## The route to the 'login' page
 @app.route('/login', methods=['GET', 'POST'])
 def Login():
     form = LoginFormStructure(request.form)
  
     if (request.method == 'POST' and form.validate()):
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
-            flash('Login approved!')
+
             return redirect ('DataQuery')
         else:
             flash('Error in - Username and/or password')
@@ -139,7 +144,7 @@ def Login():
     return render_template(
         'login.html',
         form=form,
-        title='Login to data analysis',
+        title='Login',
         year=datetime.now().year,
         repository_name='Pandas',
         )
@@ -197,22 +202,21 @@ def database2():
         form2 = form2
     )
 
-
-
+## The route to the 'DataQuery' page
 @app.route('/DataQuery',methods = ['GET' , 'POST'])
 def DataQuery():
-    form = QueryFormStructure()
-    chart = ""
+    form = QueryFormStructure(enddate= pd.Timestamp("2020-02-18"),startdate=pd.Timestamp("2020-01-02"))
+    chart = "https://www.ecdc.europa.eu/sites/default/files/styles/is_large/public/images/ebola-geographical-distribution-cases-congo-uganda-3-march-2020.jpg?itok=-lv129GAhttps://www.ecdc.europa.eu/sites/default/files/styles/is_large/public/images/ebola-geographical-distribution-cases-congo-uganda-3-march-2020.jpg?itok=-lv129GA"
     ## reads the file
     df = pd.read_csv(path.join(path.dirname(__file__), "static/data/ebola.csv"))
     s = set(df['Country'])
     l=list(s)
+    l.sort()
     countrychoices= list(zip(l,l))
     form.countries.choices=countrychoices
     if request.method == 'POST':
         country_list= form.countries.data
         df['Date'] = df['Date'].astype(str)
-        
         df['Date'] = df['Date'].apply(lambda x: swich_day_month(x))
         df['Date']= pd.to_datetime(df['Date'])
         df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
