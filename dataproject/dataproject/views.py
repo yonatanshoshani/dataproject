@@ -224,25 +224,43 @@ def DataQuery():
     countrychoices= list(zip(l,l))
     # registers the user's choice of countries.
     form.countries.choices=countrychoices
+    # if the user presses submit:
     if request.method == 'POST':
+        # creates a list of the countries the user chose.
         country_list= form.countries.data
+        #
         df['Date'] = df['Date'].astype(str)
+        # organizes the dates on the list.
         df['Date'] = df['Date'].apply(lambda x: swich_day_month(x))
+        # converts the items in the list to 'datetime' type.
         df['Date']= pd.to_datetime(df['Date'])
+        # updates te dataframe so that there are only items with a certain indicator.
         df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
+        #
         df3 = df.loc[df['Country'] == 'Sierra Leone']
+        # sets the index on the graph to 'Date'.
         df3 = df3.set_index('Date')
+        # isolates the 'date' column and removes the other columns.
         df3 = df3.drop(['Indicator' , 'Country' , 'value'] , 1)
+        # a for loop that goes over the countries list.
         for country in country_list:
+            #
             df1 = df.loc[df['Country'] == country]
+            #
             df1 = df1.set_index('Date')
+            # sorts the dates in the dataframe in a chronological order.
             df1 = df1.sort_index()
+            # drops the 'indicator' and 'country' columns from the dataframe.
             df1=df1.drop(['Indicator' , 'Country'] , 1)
+            # replaces each country with it's value, in order to replace the whole column.
             df3[country] = df1['value']
+        # fills items with no value to have a value of 0.
         df3 = df3.fillna(value=0)
+        # creates the graph and makes it look nice.
         fig = plt.figure()
         ax = fig.add_subplot(111)
         df3.plot(ax=ax)
+        # converts the graph to an image so it could be displayed on the page.
         chart = plot_to_img(fig)
  
  
@@ -256,6 +274,7 @@ def DataQuery():
  
     )
 
+# a code that converts a plot graph to a PNG image.
 def plot_to_img(fig):
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
@@ -263,6 +282,8 @@ def plot_to_img(fig):
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode('utf8')
     return pngImageB64String
 
+
+# a function that replaces the positions of the day and the month in the date column.
 def swich_day_month(s):
             l = s.split('/')
             return(l[1] + '/' + l[0] + '/' + l[2])
