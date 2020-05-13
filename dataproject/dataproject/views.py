@@ -98,15 +98,18 @@ def datamodel():
 @app.route('/register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
- 
+    # if the user presses submit
     if (request.method == 'POST' and form.validate()):
+        #check if the user exist in the csv
         if (not db_Functions.IsUserExist(form.username.data)):
+            # add a new user to the system
             db_Functions.AddNewUser(form)
             db_table = ""
  
             flash('Thanks for registering new user - '+ form.FirstName.data + " " + form.LastName.data )
-            # Here you should put what to do (or were to go) if registration was good
+            # shows an approval message
         else:
+            # shows an error message
             flash('Error: User with this Username already exist ! - '+ form.username.data)
             form = UserRegistrationFormStructure(request.form)
  
@@ -122,12 +125,14 @@ def Register():
 @app.route('/login', methods=['GET', 'POST'])
 def Login():
     form = LoginFormStructure(request.form)
- 
+    # if the user presses submit
     if (request.method == 'POST' and form.validate()):
+        # check if the login is good
         if (db_Functions.IsLoginGood(form.username.data, form.password.data)):
-
+            # sends the user to the data query page
             return redirect ('DataQuery')
         else:
+            #shows an error message
             flash('Error in - Username and/or password')
    
     return render_template(
@@ -138,17 +143,21 @@ def Login():
         repository_name='Pandas',
         )
  
+# route to the data base 1 page
 @app.route('/data/database1' , methods = ['GET' , 'POST'])
 def database1():
     """Renders the about page."""
     form1 = ExpandForm()
     form2 = CollapseForm()
+    #reads the csv and converts it to data frame
     df = pd.read_csv(path.join(path.dirname(__file__), 'static\data\Corona.csv'))
     raw_data_table = ''
- 
+    #if the user presses submit
     if request.method == 'POST':
+        #if the user clicks on expand the data base will now be shown on the page
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
             raw_data_table = df.to_html(classes = 'table table-hover')
+        #if the user clicks on collapse the data base will be removed
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
             raw_data_table = ''
  
@@ -194,14 +203,21 @@ def database2():
 ## The route to the 'DataQuery' page
 @app.route('/DataQuery',methods = ['GET' , 'POST'])
 def DataQuery():
+    ## sets the start date and the end date for the data query form.
     form = QueryFormStructure(enddate= pd.Timestamp("2016-03-23"),startdate=pd.Timestamp("2014-08-29"))
+    ## shows an image until the graph is shown
     chart = "https://ichef.bbci.co.uk/news/1024/branded_news/8859/production/_108550943_ebolaepa1.jpg"
-    ## reads the file
+    ## reads the file and converts it to data frame
     df = pd.read_csv(path.join(path.dirname(__file__), "static/data/ebola.csv"))
+    # isolates the 'country' column in the dataframe.
     s = set(df['Country'])
+    # creates a list with all the countries.
     l=list(s)
+    # sorts all the countries in alphabetical order.
     l.sort()
+    # finds and deletes all duplications in the countries list.
     countrychoices= list(zip(l,l))
+    # registers the user's choice of countries.
     form.countries.choices=countrychoices
     if request.method == 'POST':
         country_list= form.countries.data

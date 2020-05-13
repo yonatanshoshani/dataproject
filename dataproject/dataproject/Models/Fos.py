@@ -14,7 +14,7 @@ from wtforms.validators import InputRequired
 # all All of the above are Imports to make the forms possible to make##
 
 #---------------------ExpandForm--------------------------#
-#
+# converts the first submit option to expand
 #-----------------------------------------------------------------------------------#
 class ExpandForm(FlaskForm):
     submit1 = SubmitField('Expand')
@@ -22,7 +22,7 @@ class ExpandForm(FlaskForm):
     value="Expand"
 
 #---------------------CollapseForm--------------------------#
-#
+#converts the second submit option to collapse
 #-----------------------------------------------------------------------------------#
 class CollapseForm(FlaskForm):
     submit2 = SubmitField('Collapse')
