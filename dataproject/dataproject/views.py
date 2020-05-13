@@ -1,32 +1,21 @@
 
-from flask import render_template
 from dataproject import app
 from dataproject.Models.LocalDatabaseRoutines import create_LocalDatabaseServiceRoutines
 
- 
- 
 from datetime import datetime
-from flask import render_template, redirect, request
  
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
  
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
  
-import json
-import requests
- 
-import io
-import base64
- 
 from os import path
  
-from flask   import Flask, render_template, flash, request
-from wtforms import Form, BooleanField, StringField, PasswordField, validators
-from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateField
+from flask   import Flask, render_template, flash, request,redirect
+from wtforms import Form, BooleanField, StringField, PasswordField, validators,SubmitField
+from wtforms import TextField, TextAreaField, SelectField, DateField
 from wtforms import ValidationError
 
 from dataproject.Models.QueryFormStructure import QueryFormStructure
