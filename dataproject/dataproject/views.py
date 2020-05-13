@@ -184,12 +184,15 @@ def database2():
     """Renders the about page."""
     form1 = ExpandForm()
     form2 = CollapseForm()
+    #reads the csv and converts it to data frame
     df = pd.read_csv(path.join(path.dirname(__file__), 'static\data\ebola.csv'))
     raw_data_table = ''
- 
+    #if the user presses submit
     if request.method == 'POST':
+        #if the user clicks on expand the data base will now be shown on the page
         if request.form['action'] == 'Expand' and form1.validate_on_submit():
             raw_data_table = df.to_html(classes = 'table table-hover')
+        #if the user clicks on collapse the data base will be remove
         if request.form['action'] == 'Collapse' and form2.validate_on_submit():
             raw_data_table = ''
  
@@ -228,7 +231,7 @@ def DataQuery():
     if request.method == 'POST':
         # creates a list of the countries the user chose.
         country_list= form.countries.data
-        #
+        #converts the dates in the dataframe to string type
         df['Date'] = df['Date'].astype(str)
         # organizes the dates on the list.
         df['Date'] = df['Date'].apply(lambda x: swich_day_month(x))
@@ -236,7 +239,6 @@ def DataQuery():
         df['Date']= pd.to_datetime(df['Date'])
         # updates te dataframe so that there are only items with a certain indicator.
         df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
-        #
         df3 = df.loc[df['Country'] == 'Sierra Leone']
         # sets the index on the graph to 'Date'.
         df3 = df3.set_index('Date')
@@ -244,9 +246,7 @@ def DataQuery():
         df3 = df3.drop(['Indicator' , 'Country' , 'value'] , 1)
         # a for loop that goes over the countries list.
         for country in country_list:
-            #
             df1 = df.loc[df['Country'] == country]
-            #
             df1 = df1.set_index('Date')
             # sorts the dates in the dataframe in a chronological order.
             df1 = df1.sort_index()

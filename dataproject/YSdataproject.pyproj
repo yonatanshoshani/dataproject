@@ -43,7 +43,6 @@
     <Folder Include="dataproject\static\fonts\" />
     <Folder Include="dataproject\static\data\" />
     <Folder Include="dataproject\Models\" />
-    <Folder Include="dataproject\static\pictures\" />
     <Folder Include="dataproject\static\scripts\" />
     <Folder Include="dataproject\templates\" />
   </ItemGroup>
@@ -51,14 +50,6 @@
     <Content Include="dataproject\static\data\Corona.csv" />
     <Content Include="dataproject\static\data\ebola.csv" />
     <Content Include="dataproject\static\data\users.csv" />
-    <Content Include="dataproject\static\pictures\55654430880100490311no.jpg" />
-    <Content Include="dataproject\static\pictures\images.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה %281%29.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה %282%29.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה %283%29.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה %284%29.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה %285%29.jpg" />
-    <Content Include="dataproject\static\pictures\הורדה.jpg" />
     <Content Include="dataproject\templates\database1.html" />
     <Content Include="dataproject\templates\database2.html" />
     <Content Include="dataproject\templates\datamodel.html" />
