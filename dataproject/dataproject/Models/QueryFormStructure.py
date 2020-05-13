@@ -24,7 +24,7 @@ from wtforms.validators import DataRequired
 ##---------------------------------------------------------------------##
 class LoginFormStructure(FlaskForm):
     username   = StringField('User name:  ' , validators = [DataRequired()])
-    password   = PasswordField('Pass word:  ' , validators = [DataRequired()])
+    password   = PasswordField('Password:  ' , validators = [DataRequired()])
     submit = SubmitField('Submit')
 
 ##------------UserRegistrationFormStructure--------------------## 

@@ -30,7 +30,7 @@ from wtforms import TextField, TextAreaField, SubmitField, SelectField, DateFiel
 from wtforms import ValidationError
 
 from dataproject.Models.QueryFormStructure import QueryFormStructure
-## The impor 'QueryFormStructure' form used to select parameters to display the graph on the data query page.
+## The import 'QueryFormStructure' form used to select parameters to display the graph on the data query page.
 from dataproject.Models.QueryFormStructure import LoginFormStructure
 from dataproject.Models.QueryFormStructure import UserRegistrationFormStructure
  ##Import the forms that the user fills in order to register or login to the website
@@ -105,7 +105,7 @@ def datamodel():
         message='Your application data page.'
     )
 
-## The route to the h'register' page
+## The route to the register page
 @app.route('/register', methods=['GET', 'POST'])
 def Register():
     form = UserRegistrationFormStructure(request.form)
@@ -144,7 +144,7 @@ def Login():
     return render_template(
         'login.html',
         form=form,
-        title='Login',
+        title='Login to data analysis',
         year=datetime.now().year,
         repository_name='Pandas',
         )
@@ -205,8 +205,8 @@ def database2():
 ## The route to the 'DataQuery' page
 @app.route('/DataQuery',methods = ['GET' , 'POST'])
 def DataQuery():
-    form = QueryFormStructure(enddate= pd.Timestamp("2020-02-18"),startdate=pd.Timestamp("2020-01-02"))
-    chart = "https://www.ecdc.europa.eu/sites/default/files/styles/is_large/public/images/ebola-geographical-distribution-cases-congo-uganda-3-march-2020.jpg?itok=-lv129GAhttps://www.ecdc.europa.eu/sites/default/files/styles/is_large/public/images/ebola-geographical-distribution-cases-congo-uganda-3-march-2020.jpg?itok=-lv129GA"
+    form = QueryFormStructure(enddate= pd.Timestamp("2016-03-23"),startdate=pd.Timestamp("2014-08-29"))
+    chart = "https://ichef.bbci.co.uk/news/1024/branded_news/8859/production/_108550943_ebolaepa1.jpg"
     ## reads the file
     df = pd.read_csv(path.join(path.dirname(__file__), "static/data/ebola.csv"))
     s = set(df['Country'])
