@@ -240,7 +240,7 @@ def DataQuery():
         # updates te dataframe so that there are only items with a certain indicator.
         df = df.loc[df["Indicator"] == 'Cumulative number of confirmed Ebola deaths']
         ## ניסיון ליצור דאטה סט ריק במטרה כדי לבנות את הדאטה פריים החדש
-        df3 = df.loc[df['Country'] == 'Sierra Leone']
+        df3 = df.loc[df['Country'].isin(country_list)]
         # sets the index on the graph to 'Date'.
         df3 = df3.set_index('Date')
         # isolates the 'date' column and removes the other columns.
